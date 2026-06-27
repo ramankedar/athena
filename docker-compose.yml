@@ -1,0 +1,80 @@
+# ── Athena Platform — Local Development Services ─────────────────────────────
+#
+# This file defines the supporting services for local development.
+# The Athena application itself runs outside Docker during development.
+#
+# Start services:   make docker-up
+# Stop services:    make docker-down
+# Destroy data:     make docker-down-volumes
+
+services:
+  # ── TimescaleDB (PostgreSQL + time-series extension) ───────────────────────
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: athena_dev
+      POSTGRES_USER: athena
+      POSTGRES_PASSWORD: ${TIMESCALEDB_PASSWORD:-changeme}
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./infrastructure/docker/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U athena -d athena_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ── Redis (cache + intra-process pub/sub + idempotency keys) ───────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── Prometheus (metrics collection) ────────────────────────────────────────
+  # Uncomment for local observability development.
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./infrastructure/compose/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #     - prometheus_data:/prometheus
+
+  # ── Grafana (dashboards) ───────────────────────────────────────────────────
+  # Uncomment for local dashboard development.
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+
+volumes:
+  timescaledb_data:
+    driver: local
+  redis_data:
+    driver: local
+  # prometheus_data:
+  #   driver: local
+  # grafana_data:
+  #   driver: local

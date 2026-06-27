@@ -1,0 +1,79 @@
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ── uv ───────────────────────────────────────────────────────────────────────
+# Commit uv.lock for reproducible builds — do NOT gitignore it
+
+# ── Testing ──────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.hypothesis/
+
+# ── Type checking ────────────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ── Linting ──────────────────────────────────────────────────────────────────
+.ruff_cache/
+
+# ── Secrets & environment ────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.secrets.baseline
+
+# ── Market data (contents are gitignored; the directory itself is tracked) ───
+data/raw/
+data/processed/
+data/external/
+data/cache/
+!data/.gitkeep
+!data/README.md
+
+# ── Jupyter ──────────────────────────────────────────────────────────────────
+notebooks/.ipynb_checkpoints/
+notebooks/**/.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── Documentation build ──────────────────────────────────────────────────────
+docs/site/
+site/
+
+# ── IDE ──────────────────────────────────────────────────────────────────────
+.idea/
+*.swp
+*.swo
+*~
+
+# ── macOS ────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Docker ───────────────────────────────────────────────────────────────────
+*.pid
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/

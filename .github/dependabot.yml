@@ -1,0 +1,37 @@
+version: 2
+
+updates:
+  # ── Python dependencies (uv / pip ecosystem) ─────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 10
+    # Group non-breaking minor/patch updates to reduce PR noise.
+    groups:
+      runtime-deps:
+        patterns: ["pydantic*", "structlog", "httpx", "anyio", "typer"]
+        update-types: ["minor", "patch"]
+      test-deps:
+        patterns: ["pytest*", "hypothesis", "respx", "freezegun*"]
+        update-types: ["minor", "patch"]
+      lint-deps:
+        patterns: ["ruff", "mypy", "types-*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # Major version bumps require manual review for financial software.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # ── GitHub Actions ────────────────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5

@@ -1,0 +1,32 @@
+# ── Line endings ─────────────────────────────────────────────────────────────
+* text=auto eol=lf
+
+# Force LF on shell scripts; CRLF breaks shebangs on Linux/macOS
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Python
+*.py text eol=lf diff=python
+
+# TOML / YAML / JSON / Markdown
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf diff=markdown
+
+# ── Binary files (no diff / no line ending normalisation) ────────────────────
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.parquet binary
+*.arrow binary
+*.pkl binary
+
+# ── Export ignore (files excluded from `git archive`) ────────────────────────
+.gitattributes export-ignore
+.gitignore export-ignore
+.github export-ignore

@@ -1,0 +1,24 @@
+# ── Development environment configuration ─────────────────────────────────────
+# Non-secret defaults for local development.
+# Secrets (passwords, API keys) go in .env — never in this file.
+
+[platform]
+log_level = "DEBUG"
+
+[database]
+host = "localhost"
+port = 5432
+name = "athena_dev"
+user = "athena"
+
+[redis]
+url = "redis://localhost:6379/0"
+max_connections = 10
+
+[market]
+session_timezone = "Asia/Kolkata"
+# Instruments active in the development universe (small set for fast iteration)
+instruments = [
+  "NSE:NIFTY50-INDEX",
+  "NSE:NIFTYBANK-INDEX",
+]

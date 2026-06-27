@@ -1,0 +1,79 @@
+[importlinter]
+root_packages =
+    athena
+
+# ── Contract 1: Core domain is dependency-free ────────────────────────────────
+# athena.core must not import from any other athena subpackage.
+# This is the foundational rule: the domain must be portable.
+[importlinter:contract:core-is-dependency-free]
+name = Core domain has no internal athena imports
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.engines
+    athena.shared
+    athena.interfaces
+
+# ── Contract 2: Engine peer isolation ────────────────────────────────────────
+# No engine may import from a sibling engine directly.
+# All cross-engine communication must flow through domain events or
+# explicit service ports defined in athena.core.
+[importlinter:contract:data-engine-isolation]
+name = Data engine does not import from sibling engines
+type = forbidden
+source_modules =
+    athena.engines.data
+forbidden_modules =
+    athena.engines.research
+    athena.engines.intelligence
+    athena.engines.trading
+    athena.engines.governance
+    athena.interfaces
+
+[importlinter:contract:research-engine-isolation]
+name = Research engine does not import from sibling engines
+type = forbidden
+source_modules =
+    athena.engines.research
+forbidden_modules =
+    athena.engines.data.infrastructure
+    athena.engines.intelligence
+    athena.engines.trading
+    athena.engines.governance
+    athena.interfaces
+
+[importlinter:contract:trading-engine-isolation]
+name = Trading engine does not import from sibling engines
+type = forbidden
+source_modules =
+    athena.engines.trading
+forbidden_modules =
+    athena.engines.research
+    athena.engines.intelligence
+    athena.engines.data.infrastructure
+    athena.engines.governance
+    athena.interfaces
+
+[importlinter:contract:governance-engine-isolation]
+name = Governance engine does not import from sibling engines
+type = forbidden
+source_modules =
+    athena.engines.governance
+forbidden_modules =
+    athena.engines.data.infrastructure
+    athena.engines.research
+    athena.engines.intelligence
+    athena.engines.trading
+    athena.interfaces
+
+# ── Contract 3: Interfaces are the top delivery layer ────────────────────────
+# The shared utilities layer must not import from delivery or engine layers.
+[importlinter:contract:shared-does-not-import-engines]
+name = Shared utilities do not import from engines or interfaces
+type = forbidden
+source_modules =
+    athena.shared
+forbidden_modules =
+    athena.engines
+    athena.interfaces

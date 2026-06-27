@@ -1,0 +1,25 @@
+# ── Staging environment configuration ────────────────────────────────────────
+# Mirrors production configuration with live feed (read-only) and paper orders.
+# All secrets injected via environment variables.
+
+[platform]
+log_level = "INFO"
+
+[database]
+port = 5432
+name = "athena_staging"
+user = "athena"
+# host and password: ATHENA_DATABASE__HOST, ATHENA_DATABASE__PASSWORD
+
+[redis]
+max_connections = 20
+# url: ATHENA_REDIS__URL
+
+[market]
+session_timezone = "Asia/Kolkata"
+instruments = [
+  "NSE:NIFTY50-INDEX",
+  "NSE:NIFTYBANK-INDEX",
+  "BSE:SENSEX-INDEX",
+  "BSE:BANKEX-INDEX",
+]

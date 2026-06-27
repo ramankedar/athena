@@ -1,0 +1,65 @@
+site_name: Athena Platform
+site_description: AI-powered quantitative research and automated trading platform for Indian derivative markets
+site_author: Athena Platform Engineering
+repo_url: https://github.com/ramankedar/athena
+repo_name: ramankedar/athena
+docs_dir: docs
+site_dir: docs/site
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+    - content.code.annotate
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - Overview: architecture.md
+      - Decisions (ADRs):
+          - "ADR-0001: Fyers API": adr/0001-use-fyers-api.md
+          - "ADR-0002: uv Package Manager": adr/0002-use-uv.md
+          - "ADR-0003: Hexagonal Architecture": adr/0003-hexagonal-architecture.md
+          - "ADR-0004: TimescaleDB": adr/0004-timescaledb.md
+  - API Reference:
+      - Core Domain: reference/core.md
+      - Engines: reference/engines.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
