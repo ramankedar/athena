@@ -193,3 +193,29 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.market
+
+# ── Contract 14: Market data domain layer ────────────────────────────────────
+# athena.market_data is a peer layer to athena.time, athena.market, athena.assets,
+# athena.storage. It may import from athena.core (for Symbol, Price, Quantity)
+# and athena.platform (for exceptions). No cross-peer imports.
+[importlinter:contract:market-data-does-not-import-peers]
+name = Market data domain does not import from peer layers or engines
+type = forbidden
+source_modules =
+    athena.market_data
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+    athena.time
+    athena.market
+    athena.assets
+    athena.storage
+
+# ── Contract 15: Core does not import from market_data domain ─────────────────
+[importlinter:contract:core-does-not-import-market-data]
+name = Core domain does not import from market data domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.market_data

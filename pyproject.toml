@@ -120,6 +120,8 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["S101", "ANN", "PLR2004", "TC001", "TC003"]
+"src/athena/market_data/ohlcv.py" = ["C901"]
+"src/athena/market_data/validation.py" = ["C901"]
 "scripts/**/*.py" = ["S", "ANN", "T201"]
 "docs/**/*.py" = ["ANN", "INP001"]
 
