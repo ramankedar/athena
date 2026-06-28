@@ -115,6 +115,7 @@ select = [
 ]
 ignore = [
   "ANN401", # Dynamically typed expressions (Any) — needed in some adapters
+  "UP046",  # Generic class type-parameter syntax (PEP 695): deferred for wider tooling compat
 ]
 
 [tool.ruff.lint.per-file-ignores]

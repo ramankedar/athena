@@ -114,8 +114,6 @@ forbidden_modules =
     athena.interfaces
 
 # ── Contract 7: Core does not import from time domain ─────────────────────────
-# athena.core must remain the dependency-free foundation. The time domain
-# imports FROM core, never the reverse.
 [importlinter:contract:core-does-not-import-time]
 name = Core domain does not import from time domain
 type = forbidden
@@ -123,3 +121,27 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.time
+
+# ── Contract 8: Storage domain layer ─────────────────────────────────────────
+# athena.storage defines persistence interfaces. It may import from athena.core
+# (domain types like Tick, OHLCV, Instrument) and from athena.platform
+# (exceptions). It must NOT import from engines, interfaces, or the time
+# domain (athena.time and athena.storage are peer layers).
+[importlinter:contract:storage-does-not-import-engines]
+name = Storage domain does not import from engines or delivery layers
+type = forbidden
+source_modules =
+    athena.storage
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+    athena.time
+
+# ── Contract 9: Core does not import from storage domain ─────────────────────
+[importlinter:contract:core-does-not-import-storage]
+name = Core domain does not import from storage domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.storage
