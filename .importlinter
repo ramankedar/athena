@@ -245,3 +245,30 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.features
+
+# ── Contract 18: Experiments domain layer ────────────────────────────────────
+# athena.experiments is a peer layer. It imports from athena.platform only.
+# No cross-peer imports.
+[importlinter:contract:experiments-does-not-import-peers]
+name = Experiments domain does not import from peer layers or engines
+type = forbidden
+source_modules =
+    athena.experiments
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+    athena.time
+    athena.market
+    athena.assets
+    athena.storage
+    athena.market_data
+    athena.features
+
+# ── Contract 19: Core does not import from experiments domain ─────────────────
+[importlinter:contract:core-does-not-import-experiments]
+name = Core domain does not import from experiments domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.experiments
