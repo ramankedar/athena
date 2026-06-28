@@ -219,3 +219,29 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.market_data
+
+# ── Contract 16: Feature domain layer ────────────────────────────────────────
+# athena.features is a peer layer to athena.market_data, athena.assets, etc.
+# It imports from athena.platform (exceptions) only. No cross-peer imports.
+[importlinter:contract:features-does-not-import-peers]
+name = Feature domain does not import from peer layers or engines
+type = forbidden
+source_modules =
+    athena.features
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+    athena.time
+    athena.market
+    athena.assets
+    athena.storage
+    athena.market_data
+
+# ── Contract 17: Core does not import from features domain ────────────────────
+[importlinter:contract:core-does-not-import-features]
+name = Core domain does not import from features domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.features
