@@ -91,8 +91,6 @@ forbidden_modules =
     athena.interfaces
 
 # ── Contract 5: Core remains dependency-free of platform ─────────────────────
-# Adding this separately ensures the core domain never depends on the platform
-# layer (which itself may depend on core — one-way only).
 [importlinter:contract:core-does-not-import-platform]
 name = Core domain does not import from platform layer
 type = forbidden
@@ -100,3 +98,28 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.platform
+
+# ── Contract 6: Time domain layer ────────────────────────────────────────────
+# athena.time is the single source of truth for temporal logic.
+# It may import from athena.core (domain types like SessionType/MarketSession)
+# and from athena.platform (exceptions, logging). It never imports from engines
+# or interfaces.
+[importlinter:contract:time-does-not-import-engines]
+name = Time domain does not import from engines or interfaces
+type = forbidden
+source_modules =
+    athena.time
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+
+# ── Contract 7: Core does not import from time domain ─────────────────────────
+# athena.core must remain the dependency-free foundation. The time domain
+# imports FROM core, never the reverse.
+[importlinter:contract:core-does-not-import-time]
+name = Core domain does not import from time domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.time
