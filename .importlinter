@@ -169,3 +169,27 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.assets
+
+# ── Contract 12: Market domain layer ─────────────────────────────────────────
+# athena.market is a peer layer to athena.time, athena.storage, athena.assets.
+# It imports from athena.platform (exceptions) only. No cross-peer imports.
+[importlinter:contract:market-does-not-import-peers]
+name = Market domain does not import from peer layers or engines
+type = forbidden
+source_modules =
+    athena.market
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+    athena.time
+    athena.storage
+    athena.assets
+
+# ── Contract 13: Core does not import from market domain ──────────────────────
+[importlinter:contract:core-does-not-import-market]
+name = Core domain does not import from market domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.market
