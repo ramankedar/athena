@@ -145,3 +145,27 @@ source_modules =
     athena.core
 forbidden_modules =
     athena.storage
+
+# ── Contract 10: Assets domain layer ─────────────────────────────────────────
+# athena.assets is self-contained. It may import from athena.platform
+# (exceptions base class) but NOT from athena.core.domain (it defines its
+# own richer types), engines, storage, time, or interfaces.
+[importlinter:contract:assets-does-not-import-engines]
+name = Assets domain does not import from engines, storage, or peer layers
+type = forbidden
+source_modules =
+    athena.assets
+forbidden_modules =
+    athena.engines
+    athena.interfaces
+    athena.storage
+    athena.time
+
+# ── Contract 11: Core does not import from assets domain ─────────────────────
+[importlinter:contract:core-does-not-import-assets]
+name = Core domain does not import from assets domain
+type = forbidden
+source_modules =
+    athena.core
+forbidden_modules =
+    athena.assets
